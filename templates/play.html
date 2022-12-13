@@ -1,0 +1,106 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="./static/styles.css">
+        <script>
+            let turn = 1;
+            let moves = [];
+
+            function clickCell(e, x, y) {
+                const el = e.target.children[0].children[0];
+                if (el.classList.length > 0) {
+                    return;
+                } else {
+                    el.classList.add(turn > 0 ? 'black' : 'white');
+                    moves.push(`${x}${y}`);
+                    turn = -turn;
+                    fetch(`./win?moves=${moves.join(',')}`)
+                        .then((response) => response.text())
+                        .then((data) => {
+                            if (data) {
+                                let message = data;
+                                const urlParams = new URLSearchParams(window.location.search);
+                                if (data === 'X') {
+                                    message = `${urlParams.get('player1')} wins`
+                                }
+                                if (data === 'O') {
+                                    message = `${urlParams.get('player2')} wins`
+                                }
+                                alert(message);
+                                fetch(`./record?player1=${urlParams.get('player1')}&player2=${urlParams.get('player2')}&winner=${data}`)
+                                    .then(() => {
+                                        window.location.href = '/stats';
+                                    })
+                            }
+                        });
+                }
+            }
+
+            window.onload = function() {
+                const cells = document.getElementsByTagName('td');
+                for (let i = 0; i < cells.length; i++) {
+                    cells[i].addEventListener('click', (e) => clickCell(e, i % 3, Math.floor(i / 3)), false);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <table class="board">
+            <tr>
+                <td>
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+                <td>
+                    
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+                <td>
+                    
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+                <td>
+                    
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+                <td>
+                    
+                    <div class="cell">
+                        <div></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="./static/styles.css">
+        <script>
+            function changeNumOfPlayer(num) {
+                if (num > 1) {
+                    document.getElementById('player-form').elements['player2'].removeAttribute('disabled');
+                } else {
+                    document.getElementById('player-form').elements['player2'].setAttribute('disabled', true);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Welcome to my Tic-tac-toe</h1>
+        <!-- <h2>Select # of players</h2> -->
+        <form id="player-form" method="post">
+            <!-- <div class="form-input">
+                <input required name="players" id="single-player" type="radio" value="1" checked onchange="changeNumOfPlayer(1)"/>
+                <label for="single-player">1</label>
+
+                <input required name="players" id="double-player" type="radio" value="2" onchange="changeNumOfPlayer(2)"/>
+                <label for="double-player">2</label>
+            </div> -->
+
+            <div class="form-input">
+                <label>Name of player 1</label><br />
+                <input name="player1" required type="input" />
+            </div>
+
+            <div id="second-player" class="form-input">
+                <label>Name of player 2</label><br />
+                <input name="player2" required type="input" />
+            </div>
+
+            <div class="form-input">
+                <button type="submit">Start</button>
+            </div>
+        </form>
+    </body>
+</html>
